@@ -39,8 +39,16 @@ class NotesController extends Controller
         return json_encode($execResult);
     }
 
-    public function getAll(Request $request)
+    public function getAll()
     {
-        return "Its Work";
+        $execResult = [
+            "error"   => false,
+            "message" => "",
+            "notes"   => []
+        ];
+
+        $execResult["notes"] = Note::all();
+
+        return json_encode($execResult);
     }
 }
