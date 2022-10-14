@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use App\Models\Note;
 
 class NotesController extends Controller
 {
@@ -15,11 +16,7 @@ class NotesController extends Controller
             "message" => ""
         ];
 
-        /*
-        | ---------------------------------------------------------------------
-        |    Validação da requisição
-        | ---------------------------------------------------------------------
-       */
+        #  Validação da requisição
         $validationRules = [
             "note" => "required|min:5|max:255"
         ];
@@ -30,7 +27,14 @@ class NotesController extends Controller
         {
             $execResult['error']   = true;
             $execResult['message'] = $validator->getMessageBag();
+
+            return $execResult;
         }
+
+        # Salvando a nova anotação
+        $newNote        = new Note();
+        $newNote->note  = $request->note;
+        $newNote->save();
 
         return json_encode($execResult);
     }
