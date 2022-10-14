@@ -38,4 +38,9 @@ class NotesController extends Controller
 
         return json_encode($execResult);
     }
+
+    public function getAll(Request $request)
+    {
+        return "Its Work";
+    }
 }
