@@ -20,4 +20,4 @@ use App\Http\Controllers\NotesController;
 #});
 
 Route::post('/note/create', [NotesController::class, 'create'])->name('note.create');
-Route::post('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
+Route::get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
