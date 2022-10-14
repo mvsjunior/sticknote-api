@@ -30,5 +30,22 @@ class NotesSelectTest extends TestCase
                     'notes' => []
                  ]);
     }
+
+    public function test_route_to_select_a_single_note_is_accessible()
+    {
+        $randomInt = random_int(1,999);
+        $response = $this->get('/api/note/' . $randomInt);
+
+        $response->assertStatus(200);
+    }
     
+    public function test_is_able_to_return_a_single_note()
+    {
+        $response = $this->get('/api/note/999');
+
+        $response->assertStatus(200)
+                 ->assertJson([
+                    'note' => []
+                 ]);
+    }
 }
