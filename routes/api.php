@@ -21,3 +21,4 @@ use App\Http\Controllers\NotesController;
 
 Route::post('/note/create', [NotesController::class, 'create'])->name('note.create');
 Route::get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
+Route::get('/note/{id}', [NotesController::class, 'select'])->name('note.select');

@@ -51,4 +51,9 @@ class NotesController extends Controller
 
         return json_encode($execResult);
     }
+
+    public function select()
+    {
+        return "selectNote";
+    }
 }
