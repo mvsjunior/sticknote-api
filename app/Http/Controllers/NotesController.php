@@ -52,8 +52,28 @@ class NotesController extends Controller
         return json_encode($execResult);
     }
 
-    public function select()
+    public function select(Request $request)
     {
-        return "selectNote";
+        $execResult = [
+            "error"   => false,
+            "message" => "",
+            "note"   => []
+        ];
+
+        $noteId = $request->id;
+
+        $note = Note::find($noteId);
+
+        if(empty($note))
+        {
+            $execResult["error"]   = true;
+            $execResult["message"] = "Nota não encontrada";
+        }
+        else
+        {
+            $execResult["note"] = $note;
+        }
+
+        return $execResult;
     }
 }
