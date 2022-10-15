@@ -147,7 +147,7 @@ class NotesController extends Controller
 
         #  Validação da requisição
         $validationRules = [
-            "id"    => "required|integer|max:5|min:1"
+            "id"    => "required|integer|max:999|min:1"
         ];
 
         $validator = Validator::make($request->all(), $validationRules);
