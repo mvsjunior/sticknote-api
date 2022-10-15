@@ -22,10 +22,21 @@ class NotesUpdateTest extends TestCase
 
     public function test_is_able_to_update_a_note_by_id()
     {
+        $noteIdTeste = 999;
 
-        $params   = ["id" => 1, 'done' => 0];
+        if( empty(Note::find($noteIdTeste)) )
+        {
+            $newNote = new Note();
+            $newNote->id = $noteIdTeste;
+            $newNote->note = "----";
+            $newNote->save();
+        }
+
+        $params   = ["id" => $noteIdTeste, 'done' => 0];
 
         $response = $this->put('/api/note/update', $params);
+
+        Note::destroy($noteIdTeste);
 
         $response->assertStatus(200)
                  ->assertJson([
