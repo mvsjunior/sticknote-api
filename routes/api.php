@@ -23,3 +23,4 @@ Route::post('/note/create', [NotesController::class, 'create'])->name('note.crea
 Route::get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
 Route::get('/note/{id}', [NotesController::class, 'select'])->name('note.select');
 Route::put('/note/update', [NotesController::class, 'update'])->name('note.update');
+Route::delete('/note/delete', [NotesController::class, 'delete'])->name('note.delete');

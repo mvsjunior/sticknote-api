@@ -137,4 +137,39 @@ class NotesController extends Controller
 
         return json_encode($execResult);
     }
+
+    public function delete(Request $request)
+    {
+        $execResult = [
+            "error"   => false,
+            "message" => ""
+        ];
+
+        #  Validação da requisição
+        $validationRules = [
+            "id"    => "required|integer|max:999|min:1"
+        ];
+
+        $validator = Validator::make($request->all(), $validationRules);
+
+        if($validator->fails())
+        {
+            $execResult['error']   = true;
+            $execResult['message'] = $validator->getMessageBag();
+
+            return json_encode($execResult);
+        }
+
+        $noteId = $request->id;
+
+        $deleteResult = Note::destroy($noteId);
+
+        if($deleteResult == FALSE)
+        {
+            $execResult["error"]   = true;
+            $execResult["message"] = "Não foi possível realizar a exclusão, não foi encontrada uma nota com a id informada";
+        }
+
+        return json_encode($execResult);
+    }
 }
