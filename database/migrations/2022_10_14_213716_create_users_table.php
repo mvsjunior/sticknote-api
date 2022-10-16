@@ -15,12 +15,6 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('note_id')
-                  ->nullable()
-                  ->constrained()
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade')
-                  ->nullOnDelete();
             $table->string('email');
             $table->string('password');
             $table->string('token');
