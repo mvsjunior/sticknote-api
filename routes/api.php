@@ -39,7 +39,7 @@ Route::post('/auth', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->post('/note/create', [NotesController::class, 'create'])->name('note.create');
-Route::get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
+Route::middleware('auth:sanctum')->get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
 Route::get('/note/{id}', [NotesController::class, 'select'])->name('note.select');
 Route::put('/note/update', [NotesController::class, 'update'])->name('note.update');
 Route::delete('/note/delete', [NotesController::class, 'delete'])->name('note.delete');
