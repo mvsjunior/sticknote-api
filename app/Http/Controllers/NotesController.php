@@ -127,8 +127,15 @@ class NotesController extends Controller
         }
 
         # Faz a busca de um registro válido
-        $noteId      = $request->id;
-        $noteUpdated = Note::find($noteId);
+        $noteId = $request->id;
+        $userId = $request->user()->id;
+
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $noteUpdated = Note::where($queryParams)->first();
 
         if(empty($noteUpdated))
         {
