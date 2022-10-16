@@ -43,5 +43,31 @@ class AuthController extends Controller
         return $array;
     }
 
+    public function login(Request $request)
+    {
+        $array = ["error" => ""];
+
+        $creds = $request->only('email', 'password');
+
+        if(\Auth::attempt($creds))
+        {
+            $user  = User::where('email', $creds['email'])->first();
+            $item  = time().rand(0,9999);
+            #$token = $user->createToken($item)->plainTextToken;
+            $token = $user->createToken($item,
+                                               [
+                                                'expired_at' => now()->addMinutes(1)
+                                               ]
+                                        )->plainTextToken;
+
+            $array['token'] = $token;
+        }
+        else
+        {
+            $array['error'] = 'E-mail e/ou senha incorretos';
+        }
+
+        return $array;
+    }
 
 }
