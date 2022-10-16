@@ -156,6 +156,8 @@ class NotesController extends Controller
             $noteUpdated->done  = $request->done;
         }
 
+        $noteUpdated->update();
+
         return json_encode($execResult);
     }
 
