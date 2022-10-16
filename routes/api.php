@@ -42,4 +42,4 @@ Route::middleware('auth:sanctum')->post('/note/create', [NotesController::class,
 Route::middleware('auth:sanctum')->get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
 Route::middleware('auth:sanctum')->get('/note/{id}', [NotesController::class, 'select'])->name('note.select');
 Route::middleware('auth:sanctum')->put('/note/update', [NotesController::class, 'update'])->name('note.update');
-Route::delete('/note/delete', [NotesController::class, 'delete'])->name('note.delete');
+Route::middleware('auth:sanctum')->delete('/note/delete', [NotesController::class, 'delete'])->name('note.delete');
