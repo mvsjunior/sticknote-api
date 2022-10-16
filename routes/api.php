@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NotesController;
 
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,9 +16,27 @@ use App\Http\Controllers\NotesController;
 |
 */
 
-#Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-#    return $request->user();
-#});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+/*
+| ---------------------------------------------------------------------
+|  Não autenticado
+| ---------------------------------------------------------------------
+| 
+*/
+Route::get('/unauthenticated', function (){
+    return ['error' => 'Usuário não logado'];
+})->name('login');
+/*
+| ---------------------------------------------------------------------
+|  Autenticação
+| ---------------------------------------------------------------------
+| 
+*/
+Route::post('/user', [AuthController::class, 'create']);
+Route::post('/auth', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/note/create', [NotesController::class, 'create'])->name('note.create');
 Route::get('/notes', [NotesController::class, 'getAll'])->name('note.getAll');
