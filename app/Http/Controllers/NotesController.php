@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Note;
+use App\Models\User;
 
 class NotesController extends Controller
 {
@@ -40,7 +41,7 @@ class NotesController extends Controller
         return json_encode($execResult);
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         $execResult = [
             "error"   => false,
@@ -48,7 +49,13 @@ class NotesController extends Controller
             "notes"   => []
         ];
 
-        $execResult["notes"] = Note::all();
+        $userId = $request->user()->id;
+
+        $notesForThisUserId  = [
+            "user_id" => $userId
+        ];
+
+        $execResult["notes"] = Note::where( $notesForThisUserId )->get();
 
         return json_encode($execResult);
     }
