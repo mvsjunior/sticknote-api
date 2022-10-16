@@ -32,8 +32,9 @@ class NotesController extends Controller
         }
 
         # Salvando a nova anotação
-        $newNote        = new Note();
-        $newNote->note  = $request->note;
+        $newNote          = new Note();
+        $newNote->note    = $request->note;
+        $newNote->user_id = $request->user()->id;
         $newNote->save();
 
         return json_encode($execResult);
