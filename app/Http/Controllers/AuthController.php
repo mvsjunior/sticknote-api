@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if($validator->fails())
         {
-            $array['error'] = $validator->message();
+            $array['error'] = $validator->getMessageBag();
             return $array;
         }
 
