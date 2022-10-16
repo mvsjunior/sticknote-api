@@ -15,7 +15,6 @@ return new class extends Migration
     {
         //
         Schema::table('users', function (Blueprint $table) {
-            $table->string('token')->nullable();
             $table->string('remember_token')->nullable();
             $table->dateTime('email_verified_at')->nullable();
         });
@@ -31,7 +30,6 @@ return new class extends Migration
         //
         Schema::table('users', function (Blueprint $table)
         {
-            $table->dropColumn('token');
             $table->dropColumn('remember_token');
             $table->dropColumn('email_verified_at');
         });
