@@ -69,8 +69,14 @@ class NotesController extends Controller
         ];
 
         $noteId = $request->id;
+        $userId = $request->user()->id;
 
-        $note = Note::find($noteId);
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $note = Note::where($queryParams)->first();
 
         if(empty($note))
         {
