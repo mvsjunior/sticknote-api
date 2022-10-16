@@ -181,9 +181,16 @@ class NotesController extends Controller
             return json_encode($execResult);
         }
 
+        # Faz a busca de um registro válido
         $noteId = $request->id;
+        $userId = $request->user()->id;
 
-        $deleteResult = Note::destroy($noteId);
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $deleteResult = Note::destroy($queryParams);
 
         if($deleteResult == FALSE)
         {
