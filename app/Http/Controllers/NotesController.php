@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Note;
+use App\Models\User;
 
 class NotesController extends Controller
 {
@@ -32,14 +33,15 @@ class NotesController extends Controller
         }
 
         # Salvando a nova anotação
-        $newNote        = new Note();
-        $newNote->note  = $request->note;
+        $newNote          = new Note();
+        $newNote->note    = $request->note;
+        $newNote->user_id = $request->user()->id;
         $newNote->save();
 
         return json_encode($execResult);
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         $execResult = [
             "error"   => false,
@@ -47,7 +49,13 @@ class NotesController extends Controller
             "notes"   => []
         ];
 
-        $execResult["notes"] = Note::all();
+        $userId = $request->user()->id;
+
+        $notesForThisUserId  = [
+            "user_id" => $userId
+        ];
+
+        $execResult["notes"] = Note::where( $notesForThisUserId )->get();
 
         return json_encode($execResult);
     }
@@ -61,8 +69,14 @@ class NotesController extends Controller
         ];
 
         $noteId = $request->id;
+        $userId = $request->user()->id;
 
-        $note = Note::find($noteId);
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $note = Note::where($queryParams)->first();
 
         if(empty($note))
         {
@@ -113,8 +127,15 @@ class NotesController extends Controller
         }
 
         # Faz a busca de um registro válido
-        $noteId      = $request->id;
-        $noteUpdated = Note::find($noteId);
+        $noteId = $request->id;
+        $userId = $request->user()->id;
+
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $noteUpdated = Note::where($queryParams)->first();
 
         if(empty($noteUpdated))
         {
@@ -160,9 +181,16 @@ class NotesController extends Controller
             return json_encode($execResult);
         }
 
+        # Faz a busca de um registro válido
         $noteId = $request->id;
+        $userId = $request->user()->id;
 
-        $deleteResult = Note::destroy($noteId);
+        $queryParams  = [
+            "user_id" => $userId,
+            "id"      => $noteId
+        ];
+
+        $deleteResult = Note::destroy($queryParams);
 
         if($deleteResult == FALSE)
         {
